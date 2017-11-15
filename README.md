@@ -1,8 +1,12 @@
-# Omniauth::Identitas
+# OmniAuth Identitas
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/omniauth/identitas`. To experiment with that code, run `bin/console` for an interactive prompt.
+This gem contains the Identitas Oauth2 strategy for omniauth. 
 
-TODO: Delete this and the text above, and describe your gem
+Please read the documentations.
+
+TODO: 
+- Add more description 
+- add documentation link
 
 ## Installation
 
@@ -22,13 +26,32 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Add Rack middleware in `config/initializers/omniauth.rb` :
+
+```ruby
+
+Rails.application.config.middleware.use OmniAuth::Builder do
+  provider :identitas, "API_KEY", "API_SECRET"
+end
+```
+
+If you are using [devise](https://github.com/plataformatec/devise) :
+
+- Make sure you add [devise configuration for omniauth](https://github.com/plataformatec/devise/wiki/OmniAuth:-Overview)
+- Add strategy in `devise.rb`
+
+```ruby
+config.omniauth :identitas, "API_KEY", "API_SECRET",
+  callback_url: "API_KEY"
+```
+
+If you are using staging version, add `ENV["IDENTITAS_SITE"] = 'http://api.identitas.extrainteger.com'` in your `boot.rb` just before `require 'bundler/setup'`.
 
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+To install this gem onto your local machine, run `bundle exec rake install`.
 
 ## Contributing
 

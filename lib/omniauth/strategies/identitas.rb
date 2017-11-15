@@ -7,15 +7,18 @@ module OmniAuth
       option :name, :identitas
 
       option :client_options, {
-        :site => "http://localhost:3000",
-        :authorize_url => "/oauth/authorize"
+        site: ENV["IDENTITAS_SITE"] ? ENV["IDENTITAS_SITE"] : "https://api.identitas.com",
+        authorize_url: "/oauth/authorize"
       }
 
       uid { raw_info["id"] }
 
       info do
         {
-          :email => raw_info["email"]
+          email: raw_info["email"],
+          first_name: raw_info["first_name"],
+          last_name: raw_info["last_name"],
+          name: [raw_info["first_name"], raw_info["last_name"]].join(" ")
         }
       end
 
