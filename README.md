@@ -31,7 +31,9 @@ Add Rack middleware in `config/initializers/omniauth.rb` :
 ```ruby
 
 Rails.application.config.middleware.use OmniAuth::Builder do
-  provider :identitas, "API_KEY", "API_SECRET"
+  provider :identitas, "API_KEY", "API_SECRET", client_options: {
+    site: "CUSTOM_URL"
+  }
 end
 ```
 
@@ -42,10 +44,11 @@ If you are using [devise](https://github.com/plataformatec/devise) :
 
 ```ruby
 config.omniauth :identitas, "API_KEY", "API_SECRET",
-  callback_url: "API_KEY"
+  callback_url: "API_KEY",
+  client_options: {
+    site: "CUSTOM_URL"
+  }
 ```
-
-If you are using staging version, add `ENV["IDENTITAS_SITE"] = 'http://api.identitas.extrainteger.com'` in your `boot.rb` just before `require 'bundler/setup'`.
 
 ## Development
 

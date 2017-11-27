@@ -7,7 +7,7 @@ module OmniAuth
       option :name, :identitas
 
       option :client_options, {
-        site: ENV["IDENTITAS_SITE"] ? ENV["IDENTITAS_SITE"] : "https://api.identitas.com",
+        site: "https://api.identitas.com",
         authorize_url: "/oauth/authorize"
       }
 
