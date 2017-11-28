@@ -22,16 +22,31 @@ module OmniAuth
         }
       end
 
+      extra do
+        {
+          m: request.params["m"]
+        }
+      end
+
       def raw_info
         @raw_info ||= access_token.get('/v1/me.json').parsed
       rescue ::Errno::ETIMEDOUT
         raise ::Timeout::Error
       end
 
-      # https://github.com/intridea/omniauth-oauth2/issues/81
+      # # https://github.com/intridea/omniauth-oauth2/issues/81
       def callback_url
-        full_host + script_name + callback_path
+        full_host + script_name + callback_path + check_if_mobile
       end
+
+      def check_if_mobile
+        "?" + {m: options.authorize_params[:m]}.to_query
+      end
+
+      def setup_phase
+        options.authorize_params[:m] = request.params["m"]
+      end
+
     end
   end
 end
