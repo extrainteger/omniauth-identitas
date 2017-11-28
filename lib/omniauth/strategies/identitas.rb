@@ -23,9 +23,11 @@ module OmniAuth
       end
 
       extra do
-        {
-          m: request.params["m"]
-        }
+        hash = {}
+        hash['raw_info'] = raw_info unless skip_info?
+        hash['m'] = request.params["m"]
+        hash['application_info'] = application_info
+        hash
       end
 
       def raw_info
@@ -45,6 +47,10 @@ module OmniAuth
 
       def setup_phase
         options.authorize_params[:m] = request.params["m"]
+      end
+
+      def application_info
+        @application_info ||= access_token.get('/v1/app/info').parsed
       end
 
     end
