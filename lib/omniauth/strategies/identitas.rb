@@ -31,7 +31,7 @@ module OmniAuth
       end
 
       def raw_info
-        @raw_info ||= access_token.get('/v1/me.json').parsed
+        @raw_info ||= access_token.get('/v1/me').parsed["info"]
       rescue ::Errno::ETIMEDOUT
         raise ::Timeout::Error
       end
